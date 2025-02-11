@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import Image from "next/image";
 
-const token =
-  "e1b1838342b4b18e7b8e1a943b06b76abd24f993001c24dfddd5858dd44ef71d2bfb70dcb91957a87b9a270903aa2e1dd791c89b3a28977015564ad1a44a1bd2f7ef9611fb6563169eed9547083548b7722314432dfc25024b86e128610bd8844b9ee6a68c1944ea32134fa62fb2e8054c3853cfcbcc4104dfd879f9d2dcac79";
+const token = process.env.STRAPI_TOKEN;
 
 const fetchRecipe = async (documentId) => {
   const res = await axios.get(
