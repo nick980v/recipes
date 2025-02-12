@@ -1,7 +1,7 @@
 // pages/tags/[tag].js
 import React from "react";
 import axios from "axios";
-import RecipeCard from "@/app/components/RecipeCard";
+import RecipeCard from "@/components/RecipeCard";
 
 const token = process.env.STRAPI_TOKEN;
 const endpoint = process.env.STRAPI_ENDPOINT;
