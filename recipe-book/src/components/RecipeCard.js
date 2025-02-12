@@ -36,8 +36,10 @@ const RecipeCard = ({ recipe, showTag }) => {
         )}
         {/* Recipe Instructions */}
         <p className="text-gray-600 text-sm">
-          {recipe.Instructions.slice(0, 100)}...
-        </p>{" "}
+          {recipe.Instructions
+            ? recipe.Instructions.slice(0, 100)
+            : "No instructions available"}
+        </p>
         {/* Optional: Limit the instructions */}
       </div>
     </div>
