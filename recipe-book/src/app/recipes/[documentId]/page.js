@@ -3,16 +3,14 @@ import axios from "axios";
 import Image from "next/image";
 
 const token = process.env.STRAPI_TOKEN;
+const endpoint = process.env.STRAPI_ENDPOINT;
 
 const fetchRecipe = async (documentId) => {
-  const res = await axios.get(
-    `http://localhost:1337/api/recipes/${documentId}?populate=*`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const res = await axios.get(`${endpoint}/${documentId}?populate=*`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return res.data.data;
 };
 
@@ -24,9 +22,7 @@ const RecipeDetailPage = async ({ params }) => {
     return <div>Error: Recipe not found</div>;
   }
 
-  const imageUrl = recipe.Image?.url
-    ? `http://localhost:1337${recipe.Image.url}`
-    : null;
+  const imageUrl = recipe.Image?.url ? `${recipe.Image.url}` : null;
 
   return (
     <div className="container mx-auto p-6">
@@ -57,7 +53,7 @@ const RecipeDetailPage = async ({ params }) => {
               <li key={index} className="text-gray-700 text-lg">
                 {ingredient.children.map((child, childIndex) => (
                   <p key={childIndex} className="text-sm text-gray-600">
-                    {child.value}
+                    {child.text}
                   </p>
                 ))}
               </li>

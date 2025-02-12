@@ -3,15 +3,16 @@ import axios from "axios";
 import RecipeCard from "./components/RecipeCard";
 
 const token = process.env.STRAPI_TOKEN;
+const endpoint = process.env.STRAPI_ENDPOINT;
 
 const fetchRecipes = async () => {
   // Fetch data from Strapi API
-  const res = await axios.get("http://localhost:1337/api/recipes?populate=*", {
+  const res = await axios.get(`${endpoint}?populate=*`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("RES DATA", res.data);
+  // console.log("RES DATA", res.data);
   return res.data.data;
 };
 
@@ -24,7 +25,7 @@ const HomePage = async () => {
       {/* Recipe Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {recipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe} showTag={true} />
         ))}
       </div>
     </div>
