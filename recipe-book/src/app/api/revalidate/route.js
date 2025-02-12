@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-export async function GET(req) {
+export async function POST(req) {
   const { searchParams } = new URL(req.url);
   const secret = searchParams.get("secret");
 
