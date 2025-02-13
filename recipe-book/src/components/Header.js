@@ -14,7 +14,7 @@ const Header = () => {
         <Link href={`/`} passHref>
           {/* Adjust the heading size and make it responsive */}
           <h1 className="text-2xl font-semibold sm:text-2xl md:text-3xl text-center sm:text-left">
-            Casadei Recipes
+            Casa Dei Recipes
           </h1>
         </Link>
         <div className="hidden sm:flex space-x-8 justify-center sm:justify-end">
