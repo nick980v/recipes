@@ -68,37 +68,37 @@ const Header = () => {
       {isMenuOpen && (
         <div className="sm:hidden flex flex-col items-center space-y-4 mt-4">
           <Link
-            href="/mains"
+            href="/tags/mains"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Mains
           </Link>
           <Link
-            href="/sides"
+            href="/tags/sides"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Side Dishes
           </Link>
           <Link
-            href="/breakfast"
+            href="/tags/breakfast"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Breakfast
           </Link>
           <Link
-            href="/desserts"
+            href="/tags/desserts"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Desserts
           </Link>
           <Link
-            href="/healthy"
+            href="/tags/healthy"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Healthy Recipes
           </Link>
           <Link
-            href="/meal-prep"
+            href="/tags/meal-prep"
             className="text-lg hover:text-yellow-400 transition-colors"
           >
             Meal Prep

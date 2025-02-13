@@ -32,9 +32,9 @@ const RecipeDetailPage = async ({ params }) => {
           <Image
             src={imageUrl}
             alt={recipe.Title}
-            width={200} // Adjust width as desired
-            height={100} // Adjust height as desired
-            className="rounded-md object-cover w-40 mb-6 max-w-sm mx-auto"
+            width={400} // Adjust width as desired
+            height={300} // Adjust height as desired
+            className="rounded-md object-cover mb-6 max-w-sm mx-auto"
           />
         )}
 
