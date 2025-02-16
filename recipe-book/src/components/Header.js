@@ -8,6 +8,8 @@ const Header = () => {
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <header className="bg-gray-800 text-white p-4 shadow-md">
       <nav className="max-w-screen-xl mx-auto flex justify-between items-center">
@@ -70,36 +72,42 @@ const Header = () => {
           <Link
             href="/tags/mains"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Mains
           </Link>
           <Link
             href="/tags/sides"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Side Dishes
           </Link>
           <Link
             href="/tags/breakfast"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Breakfast
           </Link>
           <Link
             href="/tags/desserts"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Desserts
           </Link>
           <Link
             href="/tags/healthy"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Healthy Recipes
           </Link>
           <Link
             href="/tags/meal-prep"
             className="text-lg hover:text-yellow-400 transition-colors"
+            onClick={closeMenu}
           >
             Meal Prep
           </Link>
