@@ -1,17 +1,21 @@
 import React from "react";
-import axios from "axios";
 import Image from "next/image";
 
-const token = process.env.STRAPI_TOKEN;
 const endpoint = process.env.STRAPI_ENDPOINT;
 
 const fetchRecipe = async (documentId) => {
-  const res = await axios.get(`${endpoint}/${documentId}?populate=*`, {
+  const res = await fetch(`${endpoint}/${documentId}?populate=*`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
+    cache: "force-cache",
   });
-  return res.data.data;
+  if (!res.ok) {
+    throw new Error("Failed to fetch recipes");
+  }
+
+  const data = await res.json();
+  return data.data;
 };
 
 const RecipeDetailPage = async ({ params }) => {

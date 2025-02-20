@@ -1,9 +1,6 @@
-// pages/tags/[tag].js
 import React from "react";
-import axios from "axios";
 import RecipeCard from "@/components/RecipeCard";
 
-const token = process.env.STRAPI_TOKEN;
 const endpoint = process.env.STRAPI_ENDPOINT;
 
 const formatTag = (tag) => {
@@ -15,15 +12,21 @@ const formatTag = (tag) => {
 
 const fetchRecipesByTag = async (tag) => {
   console.log("tag", tag);
-  const res = await axios.get(
+  const res = await fetch(
     `${endpoint}?filters[recipe_tags][Tag][$containsi]=${tag}&populate=*`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
+      cache: "force-cache",
     }
   );
-  return res.data.data;
+  if (!res.ok) {
+    throw new Error("Failed to fetch recipes");
+  }
+
+  const data = await res.json();
+  return data.data;
 };
 
 const TagPage = async ({ params }) => {

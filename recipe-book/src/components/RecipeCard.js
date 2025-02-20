@@ -5,7 +5,6 @@ import Tag from "./Tag";
 
 const RecipeCard = ({ recipe, showTag }) => {
   const imageUrl = recipe.Image?.url ? `${recipe.Image.url}` : null;
-  console.log("recipe", recipe);
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 transition-transform transform hover:scale-105">
       <div className="p-4">

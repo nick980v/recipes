@@ -1,24 +1,26 @@
-// src/app/recipes/page.js
-import axios from "axios";
 import RecipeCard from "@/components/RecipeCard";
 
-const token = process.env.STRAPI_TOKEN;
 const endpoint = process.env.STRAPI_ENDPOINT;
 
 const fetchRecipes = async () => {
   // Fetch data from Strapi API
-  const res = await axios.get(`${endpoint}?populate=*`, {
+  const res = await fetch(`${endpoint}?populate=*`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
+    cache: "force-cache",
   });
-  // console.log("RES DATA", res.data);
-  return res.data.data;
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch recipes");
+  }
+
+  const data = await res.json();
+  return data.data;
 };
 
 const HomePage = async () => {
   const recipes = await fetchRecipes();
-  // const recipes = await getRecipes(endpoint, token);
 
   return (
     <div className="max-w-screen-xl mx-auto px-4">
