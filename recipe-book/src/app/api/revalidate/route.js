@@ -11,6 +11,12 @@ export async function POST(req) {
 
   try {
     revalidatePath("/"); // 🔥 Clears the cache for "/"
+    revalidatePath("/tags/mains");
+    revalidatePath("/tags/sides");
+    revalidatePath("/tags/breakfast");
+    revalidatePath("/tags/desserts");
+    revalidatePath("/tags/healthy");
+    revalidatePath("/tags/meal-prep");
 
     return NextResponse.json({ message: "Revalidation triggered" });
   } catch (error) {
