@@ -8,7 +8,7 @@ const fetchRecipe = async (documentId) => {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
-    cache: "force-cache",
+    cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-cache",
   });
   if (!res.ok) {
     throw new Error("Failed to fetch recipes");
@@ -21,7 +21,7 @@ const fetchRecipe = async (documentId) => {
 const RecipeDetailPage = async ({ params }) => {
   const { documentId } = await params;
   const recipe = await fetchRecipe(documentId);
-  console.log("recipe", recipe);
+  console.log("recipe", recipe.ingredient);
   if (!recipe) {
     return <div>Error: Recipe not found</div>;
   }
@@ -53,13 +53,11 @@ const RecipeDetailPage = async ({ params }) => {
             Ingredients
           </h2>
           <ul className="list-disc pl-6 space-y-2">
-            {recipe.Ingredients.map((ingredient, index) => (
-              <li key={index} className="text-gray-700 text-lg">
-                {ingredient.children.map((child, childIndex) => (
-                  <p key={childIndex} className="text-sm text-gray-600">
-                    {child.text}
-                  </p>
-                ))}
+            {recipe.ingredient.map((ingredient) => (
+              <li key={ingredient.id} className="text-gray-700 text-lg">
+                <p key={ingredient.name} className="text-sm text-gray-600">
+                  {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                </p>
               </li>
             ))}
           </ul>

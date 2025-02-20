@@ -8,7 +8,7 @@ const fetchRecipes = async () => {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
-    cache: "force-cache",
+    cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-cache",
     next: { revalidate: false }, // Ensures Vercel caches it properly - not sure if this does anything
   });
 
