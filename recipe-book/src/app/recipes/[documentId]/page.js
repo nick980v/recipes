@@ -21,7 +21,7 @@ const fetchRecipe = async (documentId) => {
 const RecipeDetailPage = async ({ params }) => {
   const { documentId } = await params;
   const recipe = await fetchRecipe(documentId);
-  console.log("recipe", recipe.ingredient);
+  console.log("recipe ingredient", recipe.ingredient);
   if (!recipe) {
     return <div>Error: Recipe not found</div>;
   }
