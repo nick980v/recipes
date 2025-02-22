@@ -22,7 +22,6 @@ const fetchRecipes = async () => {
 
 const HomePage = async () => {
   const recipes = await fetchRecipes();
-  console.error("Recipes data in production:", recipes);
 
   return (
     <div className="max-w-screen-xl mx-auto px-4">

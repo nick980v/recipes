@@ -28,6 +28,8 @@ const RecipeDetailPage = async ({ params }) => {
 
   const imageUrl = recipe.Image?.url ? `${recipe.Image.url}` : null;
 
+  const ingredients = recipe?.ingredient || [];
+
   return (
     <div className="container mx-auto p-6">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
@@ -53,13 +55,15 @@ const RecipeDetailPage = async ({ params }) => {
             Ingredients
           </h2>
           <ul className="list-disc pl-6 space-y-2">
-            {recipe.ingredient.map((ingredient) => (
-              <li key={ingredient.id} className="text-gray-700 text-lg">
-                <p key={ingredient.name} className="text-sm text-gray-600">
+            {ingredients.length > 0 ? (
+              ingredients.map((ingredient) => (
+                <li key={ingredient.id || Math.random()}>
                   {ingredient.quantity} {ingredient.unit} {ingredient.name}
-                </p>
-              </li>
-            ))}
+                </li>
+              ))
+            ) : (
+              <p>No ingredients listed</p>
+            )}
           </ul>
         </div>
 
