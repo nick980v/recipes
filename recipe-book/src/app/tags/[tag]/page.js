@@ -19,6 +19,9 @@ const fetchRecipesByTag = async (tag) => {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
       cache: "force-cache",
+      next: {
+        revalidate: 60,
+      },
     }
   );
   if (!res.ok) {

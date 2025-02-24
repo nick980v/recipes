@@ -9,6 +9,9 @@ const fetchRecipe = async (documentId) => {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
     cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-cache",
+    next: {
+      revalidate: 60,
+    },
   });
   if (!res.ok) {
     throw new Error("Failed to fetch recipes");
