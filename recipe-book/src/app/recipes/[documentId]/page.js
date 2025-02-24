@@ -10,7 +10,7 @@ const fetchRecipe = async (documentId) => {
     },
     cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-cache",
     next: {
-      revalidate: 60,
+      revalidate: 300,
     },
   });
   if (!res.ok) {
@@ -24,7 +24,6 @@ const fetchRecipe = async (documentId) => {
 const RecipeDetailPage = async ({ params }) => {
   const { documentId } = await params;
   const recipe = await fetchRecipe(documentId);
-  console.log("recipe ingredient", recipe.ingredient);
   if (!recipe) {
     return <div>Error: Recipe not found</div>;
   }

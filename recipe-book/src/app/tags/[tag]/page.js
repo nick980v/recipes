@@ -20,7 +20,7 @@ const fetchRecipesByTag = async (tag) => {
       },
       cache: "force-cache",
       next: {
-        revalidate: 60,
+        revalidate: 300,
       },
     }
   );
