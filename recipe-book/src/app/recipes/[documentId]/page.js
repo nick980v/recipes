@@ -9,6 +9,7 @@ export const revalidate = 86400; // Revalidate every 24 hours
 export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
 
 const fetchRecipe = async (documentId) => {
+  console.log("endpoint: ", endpoint);
   const res = await fetch(`${endpoint}/${documentId}?populate=*`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,

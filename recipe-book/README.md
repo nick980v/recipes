@@ -2,6 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Setup
+
+Before running the application, you need to configure environment variables for the Strapi API integration.
+
+1. Copy the environment template:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Edit `.env` and fill in your Strapi API details (see [ENV_SETUP.md](ENV_SETUP.md) for details)
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash

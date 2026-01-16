@@ -53,14 +53,7 @@ const getCachedRecipesByTag = (tag) => {
 // Generate static params for known tags
 export async function generateStaticParams() {
   // Pre-generate pages for common tags
-  const commonTags = [
-    "mains",
-    "sides",
-    "breakfast",
-    "desserts",
-    "healthy",
-    "meal-prep",
-  ];
+  const commonTags = ["mains", "sides", "breakfast", "desserts"];
   return commonTags.map((tag) => ({
     tag: tag,
   }));

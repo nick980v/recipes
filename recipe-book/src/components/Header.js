@@ -47,16 +47,16 @@ const Header = () => {
               Desserts
             </Link>
             <Link
-              href="/tags/healthy"
+              href="/meal-planner"
               className="text-lg hover:text-yellow-400 transition-colors"
             >
-              Healthy Recipes
+              Meal Planner
             </Link>
             <Link
-              href="/tags/meal-prep"
+              href="/shopping-list"
               className="text-lg hover:text-yellow-400 transition-colors"
             >
-              Meal Prep
+              Shopping List
             </Link>
             <Link
               href={process.env.NEXT_PUBLIC_ADMIN_ENDPOINT}
@@ -107,18 +107,18 @@ const Header = () => {
               Desserts
             </Link>
             <Link
-              href="/tags/healthy"
+              href="/meal-planner"
               className="text-lg hover:text-yellow-400 transition-colors"
               onClick={closeMenu}
             >
-              Healthy Recipes
+              Meal Planner
             </Link>
             <Link
-              href="/tags/meal-prep"
+              href="/shopping-list"
               className="text-lg hover:text-yellow-400 transition-colors"
               onClick={closeMenu}
             >
-              Meal Prep
+              Shopping List
             </Link>
           </div>
         )}
