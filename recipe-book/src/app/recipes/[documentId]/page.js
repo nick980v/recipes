@@ -1,16 +1,21 @@
 import React from "react";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 
 const endpoint = process.env.STRAPI_ENDPOINT;
+
+// Configure static generation and caching
+export const revalidate = 86400; // Revalidate every 24 hours
+export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
 
 const fetchRecipe = async (documentId) => {
   const res = await fetch(`${endpoint}/${documentId}?populate=*`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
-    cache: process.env.NODE_ENV === "production" ? "force-cache" : "no-cache",
+    cache: "force-cache",
     next: {
-      revalidate: 300,
+      revalidate: 86400, // Cache for 24 hours
     },
   });
   if (!res.ok) {
@@ -21,9 +26,49 @@ const fetchRecipe = async (documentId) => {
   return data.data;
 };
 
+// Cache individual recipe fetches
+const getCachedRecipe = (documentId) => {
+  return unstable_cache(
+    async () => {
+      return await fetchRecipe(documentId);
+    },
+    ["recipe", documentId],
+    {
+      revalidate: 86400,
+      tags: ["recipes"],
+    }
+  )();
+};
+
+// Generate static params for popular recipes (optional - can be expanded)
+export async function generateStaticParams() {
+  // Fetch all recipe IDs to pre-generate pages
+  try {
+    const res = await fetch(`${endpoint}?fields[0]=documentId`, {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+      cache: "force-cache",
+      next: { revalidate: 86400 },
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const data = await res.json();
+    return data.data.map((recipe) => ({
+      documentId: recipe.documentId.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
+
 const RecipeDetailPage = async ({ params }) => {
   const { documentId } = await params;
-  const recipe = await fetchRecipe(documentId);
+  const recipe = await getCachedRecipe(documentId);
   if (!recipe) {
     return <div>Error: Recipe not found</div>;
   }

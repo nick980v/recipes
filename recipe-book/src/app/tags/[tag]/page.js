@@ -1,7 +1,12 @@
 import React from "react";
 import RecipeCard from "@/components/RecipeCard";
+import { unstable_cache } from "next/cache";
 
 const endpoint = process.env.STRAPI_ENDPOINT;
+
+// Configure static generation and caching
+export const revalidate = 86400; // Revalidate every 24 hours
+export const dynamicParams = true; // Allow dynamic params not in generateStaticParams
 
 const formatTag = (tag) => {
   return tag
@@ -11,7 +16,6 @@ const formatTag = (tag) => {
 };
 
 const fetchRecipesByTag = async (tag) => {
-  console.log("tag", tag);
   const res = await fetch(
     `${endpoint}?filters[recipe_tags][Tag][$containsi]=${tag}&populate=*`,
     {
@@ -20,7 +24,7 @@ const fetchRecipesByTag = async (tag) => {
       },
       cache: "force-cache",
       next: {
-        revalidate: 300,
+        revalidate: 86400, // Cache for 24 hours
       },
     }
   );
@@ -32,11 +36,41 @@ const fetchRecipesByTag = async (tag) => {
   return data.data;
 };
 
+// Cache tag-based recipe fetches
+const getCachedRecipesByTag = (tag) => {
+  return unstable_cache(
+    async () => {
+      return await fetchRecipesByTag(tag);
+    },
+    ["recipes-by-tag", tag],
+    {
+      revalidate: 86400,
+      tags: ["recipes"],
+    }
+  )();
+};
+
+// Generate static params for known tags
+export async function generateStaticParams() {
+  // Pre-generate pages for common tags
+  const commonTags = [
+    "mains",
+    "sides",
+    "breakfast",
+    "desserts",
+    "healthy",
+    "meal-prep",
+  ];
+  return commonTags.map((tag) => ({
+    tag: tag,
+  }));
+}
+
 const TagPage = async ({ params }) => {
   const { tag } = await params;
   const formattedTag = formatTag(tag); // Ensure it matches Strapi's format
 
-  const recipes = await fetchRecipesByTag(formattedTag);
+  const recipes = await getCachedRecipesByTag(formattedTag);
 
   if (!recipes || recipes.length === 0) {
     return <div>No recipes found for this tag.</div>;
@@ -48,7 +82,12 @@ const TagPage = async ({ params }) => {
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} showTag={false} />
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              showTag={false}
+              priority={false}
+            />
           ))}
         </div>
       </div>

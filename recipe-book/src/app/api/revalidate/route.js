@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -10,6 +10,10 @@ export async function POST(req) {
   }
 
   try {
+    // Revalidate by cache tag (more efficient than individual paths)
+    revalidateTag("recipes");
+
+    // Also revalidate specific paths for immediate updates
     revalidatePath("/"); // 🔥 Clears the cache for "/"
     revalidatePath("/tags/mains");
     revalidatePath("/tags/sides");

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Tag from "./Tag";
 
-const RecipeCard = ({ recipe, showTag }) => {
+const RecipeCard = ({ recipe, showTag, priority = false }) => {
   const imageUrl = recipe.Image?.url ? `${recipe.Image.url}` : null;
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 transition-transform transform hover:scale-105">
@@ -21,7 +21,8 @@ const RecipeCard = ({ recipe, showTag }) => {
               width={400} // Width can be adjusted based on design needs
               height={250} // Height can be adjusted based on design needs
               className="rounded-md object-cover w-full mb-3"
-              priority={true} // This will preload the image
+              priority={priority} // Only preload above-the-fold images
+              loading={priority ? undefined : "lazy"}
             />
           )}
         </Link>
