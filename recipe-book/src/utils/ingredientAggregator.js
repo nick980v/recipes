@@ -56,7 +56,11 @@ export function formatIngredient(ingredient) {
   const unit = ingredient.unit || "";
   const name = ingredient.name || "";
 
-  return `${quantity} ${unit} ${name}`.trim();
+  if (!quantity || !name) return "";
+
+  const unitPart = unit ? ` ${unit}` : "";
+
+  return `${quantity}${unitPart} ${name}`.trim();
 }
 
 /**
@@ -70,8 +74,17 @@ export function sortIngredients(ingredients) {
   }
 
   return [...ingredients].sort((a, b) => {
-    const nameA = (a.name || "").toLowerCase();
-    const nameB = (b.name || "").toLowerCase();
-    return nameA.localeCompare(nameB);
+    const nameA = a.name || "";
+    const nameB = b.name || "";
+
+    // Ingredients with names come first
+    const aHasName = nameA.trim() !== "";
+    const bHasName = nameB.trim() !== "";
+
+    if (aHasName && !bHasName) return -1; // a comes first
+    if (!aHasName && bHasName) return 1; // b comes first
+
+    // If both have names or both don't, sort alphabetically
+    return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
   });
 }

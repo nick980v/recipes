@@ -1,9 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import {
-  loadMealPlan,
-  saveMealPlan,
-  deleteMealPlan,
-} from "@/utils/mealPlanStorage";
+import { loadMealPlan, saveMealPlan } from "@/utils/mealPlanStorage";
 
 /**
  * Custom hook for managing meal plan state and synchronization with localStorage
@@ -124,8 +120,9 @@ export const useMealPlan = (weekStartDate) => {
   const clearWeek = useCallback(() => {
     if (!weekStartDate) return;
 
-    setMealPlan({ weekStartDate, meals: {} });
-    deleteMealPlan(weekStartDate);
+    const clearedPlan = { weekStartDate, meals: {} };
+    setMealPlan(clearedPlan);
+    saveMealPlan(weekStartDate, clearedPlan);
   }, [weekStartDate]);
 
   return {

@@ -16,7 +16,6 @@ describe("dateUtils", () => {
   // Test dates: January 15, 2024 is a Monday
   const monday2024 = new Date("2024-01-15");
   const tuesday2024 = new Date("2024-01-16");
-  const wednesday2024 = new Date("2024-01-17");
   const sunday2024 = new Date("2024-01-14"); // Sunday before Monday
 
   describe("getWeekStart", () => {
