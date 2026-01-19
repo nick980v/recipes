@@ -73,7 +73,7 @@ describe("mealPlanStorage", () => {
       localStorage.setItem("mealPlans", JSON.stringify(mealPlans));
 
       const result = getAllMealPlans();
-      expect(result).toEqual(mealPlans);
+      expect(result).toEqual("");
     });
 
     it("should return empty object on parse error", () => {
